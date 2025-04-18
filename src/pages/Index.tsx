@@ -20,18 +20,23 @@ const Index = () => {
   const handleSubmit = async (text: string) => {
     setLoading(true);
     try {
-      const response = await fetch(
-        "http://localhost:5678/webhook-test/86ec2ca0-822b-43cf-99c4-b2f550e5cd27",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            "Describe your audience in plain English.": text,
-          }),
-        }
-      );
+      const response = await Promise.race([
+        fetch(
+          "http://localhost:5678/webhook-test/86ec2ca0-822b-43cf-99c4-b2f550e5cd27",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              "Describe your audience in plain English.": text,
+            }),
+          }
+        ),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Request timeout")), 120000)
+        ),
+      ]);
 
       if (!response.ok) throw new Error("Failed to submit");
       
@@ -41,7 +46,9 @@ const Index = () => {
       toast({
         variant: "destructive",
         title: "Error",
-        description: "Failed to process your request. Please try again.",
+        description: error.message === "Request timeout" 
+          ? "Request timed out after 2 minutes. Please try again."
+          : "Failed to process your request. Please try again.",
       });
     } finally {
       setLoading(false);
