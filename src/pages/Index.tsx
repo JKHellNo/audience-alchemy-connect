@@ -6,8 +6,10 @@ import { IntegrationFooter } from "@/components/IntegrationFooter";
 import { useToast } from "@/components/ui/use-toast";
 
 interface Person {
-  firstName: string;
-  lastName: string;
+  first_name?: string;
+  firstName?: string;
+  last_name?: string;
+  lastName?: string;
   company: string;
   linkedin: string;
 }
@@ -56,7 +58,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 pb-32">
+    <div className="min-h-screen bg-gray-900 text-gray-100">
       <main className="container mx-auto px-4 py-16 space-y-8">
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-semibold">Describe your audience</h1>
@@ -73,7 +75,8 @@ const Index = () => {
         {results.length > 0 && <ResultsTable data={results} />}
       </main>
 
-      <IntegrationFooter />
+      {!loading && results.length > 0 && <IntegrationFooter />}
+      {!loading && results.length === 0 && <IntegrationFooter />}
     </div>
   );
 };

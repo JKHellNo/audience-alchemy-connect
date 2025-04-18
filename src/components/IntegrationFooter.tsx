@@ -25,7 +25,7 @@ const logos: IntegrationLogo[] = [
 
 export const IntegrationFooter = () => {
   return (
-    <footer className="fixed bottom-0 left-0 right-0 bg-white/5 backdrop-blur-sm border-t border-gray-800">
+    <footer className="bg-white/5 backdrop-blur-sm border-t border-gray-800 mt-12">
       <div className="max-w-4xl mx-auto py-6 px-4">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-0.5 bg-blue-500" />

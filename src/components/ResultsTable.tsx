@@ -4,8 +4,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Linkedin } from "lucide-react";
 
 interface Person {
-  firstName: string;
-  lastName: string;
+  first_name?: string;
+  firstName?: string;
+  last_name?: string;
+  lastName?: string;
   company: string;
   linkedin: string;
 }
@@ -30,8 +32,8 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
         <TableBody>
           {data.map((person, index) => (
             <TableRow key={index}>
-              <TableCell>{person.firstName}</TableCell>
-              <TableCell>{person.lastName}</TableCell>
+              <TableCell>{person.first_name || person.firstName || ""}</TableCell>
+              <TableCell>{person.last_name || person.lastName || ""}</TableCell>
               <TableCell>{person.company}</TableCell>
               <TableCell>{person.linkedin}</TableCell>
               <TableCell className="text-right">
