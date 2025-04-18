@@ -33,10 +33,10 @@ const Index = () => {
             }),
           }
         ),
-        new Promise((_, reject) =>
+        new Promise<never>((_, reject) =>
           setTimeout(() => reject(new Error("Request timeout")), 120000)
         ),
-      ]);
+      ]) as Response; // Type assertion to tell TypeScript this is a Response object
 
       if (!response.ok) throw new Error("Failed to submit");
       
