@@ -1,12 +1,72 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from "react";
+import { AudienceForm } from "@/components/AudienceForm";
+import { ResultsTable } from "@/components/ResultsTable";
+import { IntegrationFooter } from "@/components/IntegrationFooter";
+import { useToast } from "@/components/ui/use-toast";
+
+interface Person {
+  firstName: string;
+  lastName: string;
+  company: string;
+  linkedin: string;
+}
 
 const Index = () => {
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<Person[]>([]);
+  const { toast } = useToast();
+
+  const handleSubmit = async (text: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(
+        "http://localhost:5678/webhook-test/86ec2ca0-822b-43cf-99c4-b2f550e5cd27",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "Describe your audience in plain English.": text,
+          }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to submit");
+      
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to process your request. Please try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-gray-900 text-gray-100 pb-32">
+      <main className="container mx-auto px-4 py-16 space-y-8">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-semibold">Describe your audience</h1>
+        </div>
+
+        <AudienceForm onSubmit={handleSubmit} />
+
+        {loading && (
+          <div className="flex justify-center">
+            <img src="/n8n-loading.gif" alt="Loading..." className="w-16 h-16" />
+          </div>
+        )}
+
+        {results.length > 0 && <ResultsTable data={results} />}
+      </main>
+
+      <IntegrationFooter />
     </div>
   );
 };

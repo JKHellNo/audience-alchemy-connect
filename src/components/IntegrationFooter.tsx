@@ -1,0 +1,47 @@
+
+interface IntegrationLogo {
+  name: string;
+  src: string;
+  alt: string;
+}
+
+const logos: IntegrationLogo[] = [
+  {
+    name: "Apollo",
+    src: "/lovable-uploads/apollo-logo.svg",
+    alt: "Apollo logo"
+  },
+  {
+    name: "LinkedIn",
+    src: "/lovable-uploads/linkedin-logo.svg",
+    alt: "LinkedIn logo"
+  },
+  {
+    name: "Gmail",
+    src: "/lovable-uploads/gmail-logo.svg",
+    alt: "Gmail logo"
+  }
+];
+
+export const IntegrationFooter = () => {
+  return (
+    <footer className="fixed bottom-0 left-0 right-0 bg-white/5 backdrop-blur-sm border-t border-gray-800">
+      <div className="max-w-4xl mx-auto py-6 px-4">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-0.5 bg-blue-500" />
+          <p className="text-sm text-gray-400">Integrates with</p>
+          <div className="flex justify-center items-center gap-12">
+            {logos.map((logo) => (
+              <img
+                key={logo.name}
+                src={logo.src}
+                alt={logo.alt}
+                className="h-8 object-contain filter brightness-0 invert opacity-80 hover:opacity-100 transition-opacity"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
