@@ -46,10 +46,15 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
 
       if (!response.ok) throw new Error("Failed to fetch email");
       
-      const emailData = await response.json();
+      const responseData = await response.json();
+      
+      // Extract email from the nested data structure
+      const email = responseData.data?.email || null;
+      console.log("Email response:", email);
+      
       setPeople(currentPeople =>
         currentPeople.map((p, i) =>
-          i === index ? { ...p, email: emailData.email ?? null } : p
+          i === index ? { ...p, email: email } : p
         )
       );
     } catch (error) {
@@ -121,4 +126,3 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
     </div>
   );
 };
-
