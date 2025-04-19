@@ -12,7 +12,7 @@ interface Person {
   lastName?: string;
   company: string;
   linkedin: string;
-  email?: string;
+  email?: string | null;
 }
 
 interface ResultsTableProps {
@@ -49,7 +49,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
       const emailData = await response.json();
       setPeople(currentPeople =>
         currentPeople.map((p, i) =>
-          i === index ? { ...p, email: emailData.email } : p
+          i === index ? { ...p, email: emailData.email ?? null } : p
         )
       );
     } catch (error) {
@@ -86,9 +86,9 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
               <TableCell>{person.company}</TableCell>
               <TableCell>{person.linkedin}</TableCell>
               <TableCell>
-                {person.email ? (
-                  person.email
-                ) : (
+                {person.email === null 
+                  ? 'null' 
+                  : person.email || (
                   <Button
                     variant="outline"
                     size="sm"
