@@ -71,16 +71,16 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-8">
+    <div className="w-full max-w-[95vw] mx-auto mt-8 overflow-x-auto">
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>First Name</TableHead>
-            <TableHead>Last Name</TableHead>
-            <TableHead>Company</TableHead>
-            <TableHead>LinkedIn</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            <TableHead className="whitespace-nowrap">First Name</TableHead>
+            <TableHead className="whitespace-nowrap">Last Name</TableHead>
+            <TableHead className="whitespace-nowrap">Company</TableHead>
+            <TableHead className="whitespace-nowrap">LinkedIn</TableHead>
+            <TableHead className="whitespace-nowrap">Email</TableHead>
+            <TableHead className="text-right whitespace-nowrap">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -88,9 +88,9 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
             <TableRow key={index}>
               <TableCell>{person.first_name || person.firstName || ""}</TableCell>
               <TableCell>{person.last_name || person.lastName || ""}</TableCell>
-              <TableCell>{person.company}</TableCell>
-              <TableCell>{person.linkedin}</TableCell>
-              <TableCell>
+              <TableCell className="max-w-[200px] truncate">{person.company}</TableCell>
+              <TableCell className="max-w-[200px] truncate">{person.linkedin}</TableCell>
+              <TableCell className="max-w-[200px]">
                 {person.email === null 
                   ? 'null' 
                   : person.email || (
@@ -107,7 +107,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   </Button>
                 )}
               </TableCell>
-              <TableCell className="text-right space-x-2">
+              <TableCell className="text-right space-x-2 whitespace-nowrap">
                 <Button variant="outline" size="sm" className="space-x-2">
                   <Linkedin className="w-4 h-4" />
                   <span>Connect</span>
