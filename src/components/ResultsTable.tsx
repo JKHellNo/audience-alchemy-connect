@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -89,7 +88,16 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
               <TableCell>{person.first_name || person.firstName || ""}</TableCell>
               <TableCell>{person.last_name || person.lastName || ""}</TableCell>
               <TableCell className="max-w-[200px] truncate">{person.company}</TableCell>
-              <TableCell className="max-w-[200px] truncate">{person.linkedin}</TableCell>
+              <TableCell className="max-w-[200px] break-words">
+                <a 
+                  href={person.linkedin} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="underline text-blue-600 hover:text-blue-800"
+                >
+                  {person.linkedin}
+                </a>
+              </TableCell>
               <TableCell className="max-w-[200px]">
                 {person.email === null 
                   ? 'null' 
