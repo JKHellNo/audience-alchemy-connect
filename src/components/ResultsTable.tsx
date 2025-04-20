@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -71,29 +72,26 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
 
   const toggleLinkedinSelection = (linkedin: string) => {
     setSelectedLinkedin(prev => 
-      prev.includes(linkedin)
-        ? prev.filter(l => l !== linkedin)
-        : [...prev, linkedin]
+      prev.includes(linkin)
+        ? prev.filter(l => l !== linkin)
+        : [...prev, linkin]
     );
   };
 
   const handleSubmitConnections = async () => {
-    try {
-      await fetch("http://localhost:5678/webhook-test/cabbeb46-7fa1-413b-96ac-41d421a0aba0", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ linkedin_urls: selectedLinkedin }),
-      });
+    // Send POST request, no need to wait for response.
+    fetch("http://localhost:5678/webhook-test/cabbeb46-7fa1-413b-96ac-41d421a0aba0", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ linkedin_urls: selectedLinkedin }),
+    });
 
-      toast({
-        title: "Success",
-        description: "No need to wait — your connections will go out gradually over the day.",
-      });
-    } catch (error) {
-      console.error("Error submitting connections:", error);
-    }
+    toast({
+      title: "Success",
+      description: "No need to wait — your connections will go out gradually over the day.",
+    });
   };
 
   return (
@@ -120,7 +118,8 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   href={person.linkedin} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="underline text-blue-600 hover:text-blue-800"
+                  className="underline text-blue-600 hover:text-blue-800 break-words"
+                  style={{ display: "inline-block", wordBreak: "break-word"}}
                 >
                   {person.linkedin}
                 </a>
@@ -142,13 +141,13 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   </Button>
                 )}
               </TableCell>
-              <TableCell className="text-right space-y-2">
+              <TableCell className="text-right flex flex-col items-end space-y-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className={`w-32 space-x-2 ${
+                  className={`w-24 space-x-2 ${
                     selectedLinkedin.includes(person.linkedin)
-                      ? "bg-accent text-accent-foreground hover:bg-accent"
+                      ? "bg-accent text-accent-foreground"
                       : ""
                   }`}
                   onClick={() => toggleLinkedinSelection(person.linkedin)}
@@ -160,7 +159,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="w-32 space-x-2"
+                    className="w-24 space-x-2"
                   >
                     <Mail className="w-4 h-4" />
                     <span>Connect</span>
@@ -183,3 +182,4 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
     </div>
   );
 };
+

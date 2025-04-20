@@ -7,18 +7,13 @@ interface IntegrationLogo {
 
 const logos: IntegrationLogo[] = [
   {
-    name: "Apollo",
-    src: "/lovable-uploads/apollo-logo.svg",
-    alt: "Apollo logo"
-  },
-  {
     name: "LinkedIn",
-    src: "/lovable-uploads/linkedin-logo.svg",
+    src: "/lovable-uploads/f308a0ab-613e-4584-b384-33ddfae3fe5f.png",
     alt: "LinkedIn logo"
   },
   {
     name: "Gmail",
-    src: "/lovable-uploads/gmail-logo.svg",
+    src: "/lovable-uploads/839bb465-4a8a-4cb1-a24a-6e9530978c3c.png",
     alt: "Gmail logo"
   }
 ];
