@@ -142,13 +142,13 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   </Button>
                 )}
               </TableCell>
-              <TableCell className="text-right space-y-2 whitespace-nowrap">
+              <TableCell className="text-right space-y-2">
                 <Button
                   variant="outline"
                   size="sm"
-                  className={`w-full space-x-2 ${
+                  className={`w-32 space-x-2 ${
                     selectedLinkedin.includes(person.linkedin)
-                      ? "shadow-[inset_0_2px_4px_0_rgb(0,0,0,0.2)]"
+                      ? "bg-accent text-accent-foreground hover:bg-accent"
                       : ""
                   }`}
                   onClick={() => toggleLinkedinSelection(person.linkedin)}
@@ -157,7 +157,11 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   <span>Connect</span>
                 </Button>
                 {person.email && (
-                  <Button variant="outline" size="sm" className="w-full space-x-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="w-32 space-x-2"
+                  >
                     <Mail className="w-4 h-4" />
                     <span>Connect</span>
                   </Button>
