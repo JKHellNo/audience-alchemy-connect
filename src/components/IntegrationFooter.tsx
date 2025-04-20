@@ -8,7 +8,7 @@ interface IntegrationLogo {
 const logos: IntegrationLogo[] = [
   {
     name: "LinkedIn",
-    src: "/lovable-uploads/f308a0ab-613e-4584-b384-33ddfae3fe5f.png",
+    src: "/lovable-uploads/c91e2ab2-93d9-4828-bb0b-d0421652948b.png",
     alt: "LinkedIn logo"
   },
   {
