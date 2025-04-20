@@ -61,9 +61,10 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
       toast({
         variant: "destructive",
         title: "Error",
-        description: error.message === "Request timeout"
-          ? "Request timed out after 2 minutes. Please try again."
-          : "Failed to fetch email. Please try again.",
+        description:
+          error instanceof Error && error.message === "Request timeout"
+            ? "Request timed out after 2 minutes. Please try again."
+            : "Failed to fetch email. Please try again.",
       });
     } finally {
       setLoadingEmail(prev => ({ ...prev, [index]: false }));
@@ -72,9 +73,9 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
 
   const toggleLinkedinSelection = (linkedin: string) => {
     setSelectedLinkedin(prev => 
-      prev.includes(linkin)
-        ? prev.filter(l => l !== linkin)
-        : [...prev, linkin]
+      prev.includes(linkedin)
+        ? prev.filter(l => l !== linkedin)
+        : [...prev, linkedin]
     );
   };
 
@@ -114,10 +115,10 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
               <TableCell>{person.last_name || person.lastName || ""}</TableCell>
               <TableCell className="max-w-[200px] truncate">{person.company}</TableCell>
               <TableCell className="max-w-[200px] break-words">
-                <a 
-                  href={person.linkedin} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={person.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="underline text-blue-600 hover:text-blue-800 break-words"
                   style={{ display: "inline-block", wordBreak: "break-word"}}
                 >
