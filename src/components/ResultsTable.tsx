@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Linkedin, Mail, Loader2 } from "lucide-react";
+import { Linkedin, Mail, Loader2, Send } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 interface Person {
@@ -21,6 +21,7 @@ interface ResultsTableProps {
 export const ResultsTable = ({ data }: ResultsTableProps) => {
   const [people, setPeople] = useState<Person[]>(data);
   const [loadingEmail, setLoadingEmail] = useState<{ [key: number]: boolean }>({});
+  const [selectedLinkedin, setSelectedLinkedin] = useState<string[]>([]);
   const { toast } = useToast();
 
   const fetchEmail = async (person: Person, index: number) => {
@@ -47,7 +48,6 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
       
       const responseData = await response.json();
       
-      // Extract email from the nested data structure
       const email = responseData.data?.email || null;
       console.log("Email response:", email);
       
@@ -66,6 +66,33 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
       });
     } finally {
       setLoadingEmail(prev => ({ ...prev, [index]: false }));
+    }
+  };
+
+  const toggleLinkedinSelection = (linkedin: string) => {
+    setSelectedLinkedin(prev => 
+      prev.includes(linkedin)
+        ? prev.filter(l => l !== linkedin)
+        : [...prev, linkedin]
+    );
+  };
+
+  const handleSubmitConnections = async () => {
+    try {
+      await fetch("http://localhost:5678/webhook-test/cabbeb46-7fa1-413b-96ac-41d421a0aba0", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ linkedin_urls: selectedLinkedin }),
+      });
+
+      toast({
+        title: "Success",
+        description: "No need to wait — your connections will go out gradually over the day.",
+      });
+    } catch (error) {
+      console.error("Error submitting connections:", error);
     }
   };
 
@@ -115,13 +142,22 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   </Button>
                 )}
               </TableCell>
-              <TableCell className="text-right space-x-2 whitespace-nowrap">
-                <Button variant="outline" size="sm" className="space-x-2">
+              <TableCell className="text-right space-y-2 whitespace-nowrap">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className={`w-full space-x-2 ${
+                    selectedLinkedin.includes(person.linkedin)
+                      ? "shadow-[inset_0_2px_4px_0_rgb(0,0,0,0.2)]"
+                      : ""
+                  }`}
+                  onClick={() => toggleLinkedinSelection(person.linkedin)}
+                >
                   <Linkedin className="w-4 h-4" />
                   <span>Connect</span>
                 </Button>
                 {person.email && (
-                  <Button variant="outline" size="sm" className="space-x-2">
+                  <Button variant="outline" size="sm" className="w-full space-x-2">
                     <Mail className="w-4 h-4" />
                     <span>Connect</span>
                   </Button>
@@ -131,6 +167,15 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
           ))}
         </TableBody>
       </Table>
+      
+      {selectedLinkedin.length > 0 && (
+        <div className="mt-4 flex justify-end">
+          <Button onClick={handleSubmitConnections} className="space-x-2">
+            <Send className="w-4 h-4" />
+            <span>Submit Connections ({selectedLinkedin.length})</span>
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
