@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -89,7 +90,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
 
     toast({
       title: "Success",
-      description: "No need to wait — your connections will go out gradually over the day.",
+      description: "All set—your LinkedIn message is on its way!",
     });
   };
 
@@ -144,7 +145,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className={`w-24 space-x-2 ${
+                  className={`w-32 space-x-2 ${
                     selectedLinkedin.includes(person.linkedin)
                       ? "bg-accent text-accent-foreground"
                       : ""
@@ -158,7 +159,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="w-24 space-x-2"
+                    className="w-32 space-x-2"
                   >
                     <Mail className="w-4 h-4" />
                     <span>Connect</span>
