@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { AudienceForm } from "@/components/AudienceForm";
 import { ResultsTable } from "@/components/ResultsTable";
@@ -24,7 +23,7 @@ const Index = () => {
     try {
       const response = await Promise.race([
         fetch(
-          "http://localhost:5678/webhook-test/86ec2ca0-822b-43cf-99c4-b2f550e5cd27",
+          "http://localhost:5678/webhook/86ec2ca0-822b-43cf-99c4-b2f550e5cd27",
           {
             method: "POST",
             headers: {

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -29,7 +28,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
     setLoadingEmail(prev => ({ ...prev, [index]: true }));
     try {
       const response = await Promise.race([
-        fetch("http://localhost:5678/webhook-test/a1a85269-d359-4dd1-b57d-121274ea9717", {
+        fetch("http://localhost:5678/webhook/a1a85269-d359-4dd1-b57d-121274ea9717", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -80,8 +79,7 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
   };
 
   const handleSubmitConnections = async () => {
-    // Send POST request, no need to wait for response.
-    fetch("http://localhost:5678/webhook-test/cabbeb46-7fa1-413b-96ac-41d421a0aba0", {
+    fetch("http://localhost:5678/webhook/cabbeb46-7fa1-413b-96ac-41d421a0aba0", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -183,4 +181,3 @@ export const ResultsTable = ({ data }: ResultsTableProps) => {
     </div>
   );
 };
-
